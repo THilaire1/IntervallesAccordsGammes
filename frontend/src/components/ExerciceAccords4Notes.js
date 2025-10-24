@@ -137,11 +137,6 @@ const ExerciceAccords4Notes = ({ onReturn }) => {
 
   return (
     <div className="exercise-container" data-testid="exercice-accords4">
-      <StatsDisplay
-        successCount={successCount}
-        attemptCount={attemptCount}
-      />
-
       <div className="exercise-header">
         <h1>Accords 4 Notes Simples</h1>
         <p style={{ color: '#6b5b3f', fontSize: '1.1rem' }}>Identifiez les notes et le type d'accord</p>

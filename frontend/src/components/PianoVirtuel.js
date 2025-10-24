@@ -1,34 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import * as Tone from 'tone';
 
-const PIANO_KEYS = [
-  { note: 'C4', type: 'white', label: 'C' },
-  { note: 'C#4', type: 'black', offset: 23 },
-  { note: 'D4', type: 'white', label: 'D' },
-  { note: 'D#4', type: 'black', offset: 55 },
-  { note: 'E4', type: 'white', label: 'E' },
-  { note: 'F4', type: 'white', label: 'F' },
-  { note: 'F#4', type: 'black', offset: 119 },
-  { note: 'G4', type: 'white', label: 'G' },
-  { note: 'G#4', type: 'black', offset: 151 },
-  { note: 'A4', type: 'white', label: 'A' },
-  { note: 'A#4', type: 'black', offset: 183 },
-  { note: 'B4', type: 'white', label: 'B' },
-  { note: 'C5', type: 'white', label: 'C' },
-  { note: 'C#5', type: 'black', offset: 247 },
-  { note: 'D5', type: 'white', label: 'D' },
-  { note: 'D#5', type: 'black', offset: 279 },
-  { note: 'E5', type: 'white', label: 'E' },
-  { note: 'F5', type: 'white', label: 'F' },
-  { note: 'F#5', type: 'black', offset: 343 },
-  { note: 'G5', type: 'white', label: 'G' },
-  { note: 'G#5', type: 'black', offset: 375 },
-  { note: 'A5', type: 'white', label: 'A' },
-  { note: 'A#5', type: 'black', offset: 407 },
-  { note: 'B5', type: 'white', label: 'B' },
-  { note: 'C6', type: 'white', label: 'C' },
-];
-
 const PianoVirtuel = ({ synth }) => {
   const [activeKeys, setActiveKeys] = useState(new Set());
   const [localSynth, setLocalSynth] = useState(null);
@@ -63,44 +35,55 @@ const PianoVirtuel = ({ synth }) => {
     }
   };
 
-  const whiteKeys = PIANO_KEYS.filter(k => k.type === 'white');
-  const blackKeys = PIANO_KEYS.filter(k => k.type === 'black');
+  // 3 octaves de Do4 à Do6
+  const octaves = [
+    { white: ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4'], black: ['C#4', 'D#4', null, 'F#4', 'G#4', 'A#4', null] },
+    { white: ['C5', 'D5', 'E5', 'F5', 'G5', 'A5', 'B5'], black: ['C#5', 'D#5', null, 'F#5', 'G#5', 'A#5', null] },
+    { white: ['C6'], black: [] }
+  ];
 
   return (
     <div className="piano-container" data-testid="piano-virtuel">
-      <div className="piano-keys">
-        {whiteKeys.map((key, idx) => (
-          <div
-            key={key.note}
-            className={`white-key ${activeKeys.has(key.note) ? 'active' : ''}`}
-            onClick={() => playNote(key.note)}
-            data-testid={`piano-key-${key.note}`}
-            style={{ position: 'relative' }}
-          >
-            <span
-              style={{
-                position: 'absolute',
-                bottom: '8px',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                fontSize: '0.75rem',
-                color: '#666',
-                fontWeight: '500'
-              }}
-            >
-              {key.label}
-            </span>
+      <div style={{ display: 'flex', justifyContent: 'center', padding: '20px' }}>
+        {octaves.map((octave, octaveIdx) => (
+          <div key={octaveIdx} style={{ position: 'relative', display: 'flex' }}>
+            {octave.white.map((note, idx) => (
+              <div key={note} style={{ position: 'relative' }}>
+                <div
+                  className={`white-key ${activeKeys.has(note) ? 'active' : ''}`}
+                  onClick={() => playNote(note)}
+                  data-testid={`piano-key-${note}`}
+                >
+                  <span
+                    style={{
+                      position: 'absolute',
+                      bottom: '8px',
+                      left: '50%',
+                      transform: 'translateX(-50%)',
+                      fontSize: '0.75rem',
+                      color: '#666',
+                      fontWeight: '500'
+                    }}
+                  >
+                    {note.replace(/[0-9]/g, '')}
+                  </span>
+                </div>
+                {octave.black[idx] && (
+                  <div
+                    className={`black-key ${activeKeys.has(octave.black[idx]) ? 'active' : ''}`}
+                    onClick={() => playNote(octave.black[idx])}
+                    data-testid={`piano-key-${octave.black[idx]}`}
+                    style={{
+                      position: 'absolute',
+                      left: '21px',
+                      top: 0,
+                      zIndex: 2
+                    }}
+                  />
+                )}
+              </div>
+            ))}
           </div>
-        ))}
-
-        {blackKeys.map((key) => (
-          <div
-            key={key.note}
-            className={`black-key ${activeKeys.has(key.note) ? 'active' : ''}`}
-            onClick={() => playNote(key.note)}
-            data-testid={`piano-key-${key.note}`}
-            style={{ left: `${key.offset}px` }}
-          />
         ))}
       </div>
     </div>

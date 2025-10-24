@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import * as Tone from 'tone';
 import { Volume2, HelpCircle, RotateCcw } from 'lucide-react';
 import PianoVirtuel from './PianoVirtuel';
-import StatsDisplay from './StatsDisplay';
 
 const INTERVALLES = [
   { label: '2m', name: 'Seconde mineure', semitones: 1 },

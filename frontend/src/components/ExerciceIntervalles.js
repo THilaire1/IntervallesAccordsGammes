@@ -109,11 +109,6 @@ const ExerciceIntervalles = ({ onReturn }) => {
 
   return (
     <div className="exercise-container" data-testid="exercice-intervalles">
-      <StatsDisplay
-        successCount={successCount}
-        attemptCount={attemptCount}
-      />
-
       <div className="exercise-header">
         <h1>Déterminer les Intervalles</h1>
         <p style={{ color: '#6b5b3f', fontSize: '1.1rem' }}>Écoutez les deux notes et identifiez l'intervalle</p>

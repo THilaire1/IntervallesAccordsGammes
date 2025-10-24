@@ -1,4 +1,4 @@
-from fastapi import FastAPI, APIRouter
+from fastapi import FastAPI, APIRouter, HTTPException
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -6,7 +6,7 @@ import os
 import logging
 from pathlib import Path
 from pydantic import BaseModel, Field, ConfigDict
-from typing import List
+from typing import List, Optional
 import uuid
 from datetime import datetime, timezone
 
@@ -27,44 +27,58 @@ api_router = APIRouter(prefix="/api")
 
 
 # Define Models
-class StatusCheck(BaseModel):
-    model_config = ConfigDict(extra="ignore")  # Ignore MongoDB's _id field
+class ExerciseStats(BaseModel):
+    model_config = ConfigDict(extra="ignore")
     
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    client_name: str
+    exercise_type: str  # "intervalles", "accords_3", "accords_4", "modes"
+    success_count: int = 0
+    attempt_count: int = 0
     timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
-class StatusCheckCreate(BaseModel):
-    client_name: str
+class ExerciseStatsCreate(BaseModel):
+    exercise_type: str
+    success_count: int = 0
+    attempt_count: int = 0
 
-# Add your routes to the router instead of directly to app
+class ExerciseStatsUpdate(BaseModel):
+    success_count: Optional[int] = None
+    attempt_count: Optional[int] = None
+
+
+# Routes
 @api_router.get("/")
 async def root():
-    return {"message": "Hello World"}
+    return {"message": "Musical Ear Training API"}
 
-@api_router.post("/status", response_model=StatusCheck)
-async def create_status_check(input: StatusCheckCreate):
-    status_dict = input.model_dump()
-    status_obj = StatusCheck(**status_dict)
+@api_router.post("/stats", response_model=ExerciseStats)
+async def create_stats(input: ExerciseStatsCreate):
+    stats_dict = input.model_dump()
+    stats_obj = ExerciseStats(**stats_dict)
     
-    # Convert to dict and serialize datetime to ISO string for MongoDB
-    doc = status_obj.model_dump()
+    doc = stats_obj.model_dump()
     doc['timestamp'] = doc['timestamp'].isoformat()
     
-    _ = await db.status_checks.insert_one(doc)
-    return status_obj
+    await db.exercise_stats.insert_one(doc)
+    return stats_obj
 
-@api_router.get("/status", response_model=List[StatusCheck])
-async def get_status_checks():
-    # Exclude MongoDB's _id field from the query results
-    status_checks = await db.status_checks.find({}, {"_id": 0}).to_list(1000)
+@api_router.get("/stats/{exercise_type}", response_model=List[ExerciseStats])
+async def get_stats(exercise_type: str):
+    stats = await db.exercise_stats.find(
+        {"exercise_type": exercise_type},
+        {"_id": 0}
+    ).sort("timestamp", -1).limit(10).to_list(10)
     
-    # Convert ISO string timestamps back to datetime objects
-    for check in status_checks:
-        if isinstance(check['timestamp'], str):
-            check['timestamp'] = datetime.fromisoformat(check['timestamp'])
+    for stat in stats:
+        if isinstance(stat['timestamp'], str):
+            stat['timestamp'] = datetime.fromisoformat(stat['timestamp'])
     
-    return status_checks
+    return stats
+
+@api_router.delete("/stats/{exercise_type}")
+async def delete_stats(exercise_type: str):
+    result = await db.exercise_stats.delete_many({"exercise_type": exercise_type})
+    return {"deleted_count": result.deleted_count}
 
 # Include the router in the main app
 app.include_router(api_router)

@@ -1,52 +1,52 @@
-import { useEffect } from "react";
-import "@/App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import axios from "axios";
+import React, { useState } from 'react';
+import '@/App.css';
+import MenuPrincipal from '@/components/MenuPrincipal';
+import ExerciceIntervalles from '@/components/ExerciceIntervalles';
+import ExerciceAccords3Notes from '@/components/ExerciceAccords3Notes';
+import ExerciceAccords4Notes from '@/components/ExerciceAccords4Notes';
+import ExerciceModesGrecs from '@/components/ExerciceModesGrecs';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
+function App() {
+  const [currentExercise, setCurrentExercise] = useState(null);
 
-const Home = () => {
-  const helloWorldApi = async () => {
-    try {
-      const response = await axios.get(`${API}/`);
-      console.log(response.data.message);
-    } catch (e) {
-      console.error(e, `errored out requesting / api`);
+  const handleExerciseSelect = (exercise) => {
+    setCurrentExercise(exercise);
+  };
+
+  const handleReturnToMenu = () => {
+    setCurrentExercise(null);
+  };
+
+  const handleQuit = () => {
+    if (window.confirm('Voulez-vous vraiment quitter l\'application ?')) {
+      window.close();
     }
   };
 
-  useEffect(() => {
-    helloWorldApi();
-  }, []);
-
   return (
-    <div>
-      <header className="App-header">
-        <a
-          className="App-link"
-          href="https://emergent.sh"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="https://avatars.githubusercontent.com/in/1201222?s=120&u=2686cf91179bbafbc7a71bfbc43004cf9ae1acea&v=4" />
-        </a>
-        <p className="mt-5">Building something incredible ~!</p>
-      </header>
-    </div>
-  );
-};
+    <div className="App" data-testid="app-container">
+      {!currentExercise && (
+        <MenuPrincipal
+          onSelectExercise={handleExerciseSelect}
+          onQuit={handleQuit}
+        />
+      )}
 
-function App() {
-  return (
-    <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />}>
-            <Route index element={<Home />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      {currentExercise === 'intervalles' && (
+        <ExerciceIntervalles onReturn={handleReturnToMenu} />
+      )}
+
+      {currentExercise === 'accords3' && (
+        <ExerciceAccords3Notes onReturn={handleReturnToMenu} />
+      )}
+
+      {currentExercise === 'accords4' && (
+        <ExerciceAccords4Notes onReturn={handleReturnToMenu} />
+      )}
+
+      {currentExercise === 'modes' && (
+        <ExerciceModesGrecs onReturn={handleReturnToMenu} />
+      )}
     </div>
   );
 }

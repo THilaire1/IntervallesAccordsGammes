@@ -118,11 +118,6 @@ const ExerciceModesGrecs = ({ onReturn }) => {
 
   return (
     <div className="exercise-container" data-testid="exercice-modes">
-      <StatsDisplay
-        successCount={successCount}
-        attemptCount={attemptCount}
-      />
-
       <div className="exercise-header">
         <h1>Les Modes Grecs</h1>
         <p style={{ color: '#6b5b3f', fontSize: '1.1rem' }}>Écoutez la gamme et identifiez le mode (tonique Do)</p>

@@ -38,7 +38,7 @@ h1, h2, h3 {
 .piano-keys {
   display: flex;
   justify-content: center;
-  align-items: flex-end;
+  align-items: flex-start;
   position: relative;
   height: 180px;
   max-width: 1200px;
@@ -77,6 +77,7 @@ h1, h2, h3 {
   border-radius: 0 0 3px 3px;
   cursor: pointer;
   position: absolute;
+  top: 0;
   z-index: 2;
   transition: background 0.15s, transform 0.05s, box-shadow 0.15s;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);

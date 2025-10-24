@@ -35,18 +35,8 @@ h1, h2, h3 {
   border-top: 3px solid #d4af37;
 }
 
-.piano-keys {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  position: relative;
-  height: 180px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
 .white-key {
-  width: 32px;
+  width: 40px;
   height: 180px;
   background: linear-gradient(to bottom, #ffffff 0%, #f5f5f5 100%);
   border: 2px solid #333;
@@ -55,6 +45,7 @@ h1, h2, h3 {
   position: relative;
   transition: background 0.15s, transform 0.05s, box-shadow 0.15s;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin-right: -1px;
 }
 
 .white-key:hover {
@@ -70,7 +61,7 @@ h1, h2, h3 {
 }
 
 .black-key {
-  width: 22px;
+  width: 24px;
   height: 110px;
   background: linear-gradient(to bottom, #1a1a1a 0%, #000000 100%);
   border: 1px solid #000;

@@ -165,20 +165,26 @@ const ExerciceModesGrecs = ({ onReturn }) => {
         <div className={`answer-buttons ${showSuccess ? 'success-animation' : ''}`}>
           {MODES_GRECS.map((mode) => {
             let buttonStyle = {};
-            if (clickedButton === mode.name) {
-              if (isCorrect) {
-                buttonStyle = {
-                  background: 'linear-gradient(135deg, #2d7a3e 0%, #1e5a2e 100%)',
-                  color: '#fff',
-                  borderColor: '#2d7a3e'
-                };
-              } else {
-                buttonStyle = {
-                  background: 'linear-gradient(135deg, #8b2e2e 0%, #5a1e1e 100%)',
-                  color: '#fff',
-                  borderColor: '#8b2e2e'
-                };
-              }
+            let isDisabled = false;
+            
+            if (correctButton === mode.name) {
+              buttonStyle = {
+                background: 'linear-gradient(135deg, #2d7a3e 0%, #1e5a2e 100%)',
+                color: '#fff',
+                borderColor: '#2d7a3e'
+              };
+              isDisabled = true;
+            } else if (wrongButtons.has(mode.name)) {
+              buttonStyle = {
+                background: 'linear-gradient(135deg, #8b2e2e 0%, #5a1e1e 100%)',
+                color: '#fff',
+                borderColor: '#8b2e2e'
+              };
+              isDisabled = true;
+            }
+            
+            if (showSuccess) {
+              isDisabled = true;
             }
             
             return (
@@ -187,6 +193,7 @@ const ExerciceModesGrecs = ({ onReturn }) => {
                 onClick={() => handleAnswer(mode)}
                 className="answer-btn"
                 style={buttonStyle}
+                disabled={isDisabled}
                 data-testid={`mode-${mode.name.toLowerCase()}`}
               >
                 {mode.name}

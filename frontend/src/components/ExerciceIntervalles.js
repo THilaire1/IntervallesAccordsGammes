@@ -96,6 +96,28 @@ const ExerciceIntervalles = ({ onReturn }) => {
   const synthRef = useRef(null);
   const errorSynthRef = useRef(null);
 
+  const generateNewInterval = () => {
+    const notes = ['C2', 'D2', 'E2', 'F2', 'G2', 'A2', 'B2', 'C3', 'D3', 'E3', 'F3', 'G3', 'A3', 'B3', 'C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5'];
+    const randomNote1 = notes[Math.floor(Math.random() * notes.length)];
+    const randomInterval = INTERVALLES[Math.floor(Math.random() * INTERVALLES.length)];
+    
+    const note1Midi = Tone.Frequency(randomNote1).toMidi();
+    const note2Midi = note1Midi + randomInterval.semitones;
+    
+    // Vérifier que la note2 reste dans la plage C2-C5
+    if (note2Midi > Tone.Frequency('C5').toMidi()) {
+      // Recommencer avec une note de départ plus basse
+      generateNewInterval();
+      return;
+    }
+    
+    const randomNote2 = Tone.Frequency(note2Midi, 'midi').toNote();
+
+    setNote1(randomNote1);
+    setNote2(randomNote2);
+    setInterval(randomInterval);
+  };
+
   useEffect(() => {
     // Utiliser des vrais samples de piano Salamander
     const sampler = new Tone.Sampler({
@@ -135,6 +157,8 @@ const ExerciceIntervalles = ({ onReturn }) => {
       baseUrl: "https://tonejs.github.io/audio/salamander/",
       onload: () => {
         console.log("Piano samples loaded");
+        // Générer l'intervalle une fois les samples chargés
+        generateNewInterval();
       }
     }).toDestination();
     
@@ -145,38 +169,11 @@ const ExerciceIntervalles = ({ onReturn }) => {
       envelope: { attack: 0.001, decay: 0.3, sustain: 0.1, release: 0.3 }
     }).toDestination();
 
-    // Attendre que les samples soient chargés avant de générer
-    Tone.loaded().then(() => {
-      generateNewInterval();
-    });
-
     return () => {
       synthRef.current?.dispose();
       errorSynthRef.current?.dispose();
     };
   }, []);
-
-  const generateNewInterval = () => {
-    const notes = ['C2', 'D2', 'E2', 'F2', 'G2', 'A2', 'B2', 'C3', 'D3', 'E3', 'F3', 'G3', 'A3', 'B3', 'C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5'];
-    const randomNote1 = notes[Math.floor(Math.random() * notes.length)];
-    const randomInterval = INTERVALLES[Math.floor(Math.random() * INTERVALLES.length)];
-    
-    const note1Midi = Tone.Frequency(randomNote1).toMidi();
-    const note2Midi = note1Midi + randomInterval.semitones;
-    
-    // Vérifier que la note2 reste dans la plage C2-C5
-    if (note2Midi > Tone.Frequency('C5').toMidi()) {
-      // Recommencer avec une note de départ plus basse
-      generateNewInterval();
-      return;
-    }
-    
-    const randomNote2 = Tone.Frequency(note2Midi, 'midi').toNote();
-
-    setNote1(randomNote1);
-    setNote2(randomNote2);
-    setInterval(randomInterval);
-  };
 
   const playInterval = async () => {
     await Tone.start();

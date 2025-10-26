@@ -269,9 +269,11 @@ const ExerciceAccords4Notes = ({ onReturn }) => {
             onClick={playChord}
             className="btn-primary flex items-center gap-2"
             data-testid="btn-play-chord"
+            disabled={!isLoaded}
+            style={!isLoaded ? { opacity: 0.5, cursor: 'not-allowed' } : {}}
           >
             <Volume2 size={20} />
-            Écouter l'accord
+            {isLoaded ? 'Écouter l\'accord' : 'Chargement...'}
           </button>
 
           {showSuccess && (

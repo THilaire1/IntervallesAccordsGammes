@@ -145,8 +145,8 @@ const ExerciceAccords4Notes = ({ onReturn }) => {
       setPhase('type');
     } else {
       playErrorSound();
-      // Pause de 0,5s puis rejouer l'accord
-      setTimeout(() => playChord(), 500);
+      // Pause de 1,2s après le buzz puis rejouer l'accord
+      setTimeout(() => playChord(), 1200);
     }
   };
 
@@ -163,8 +163,8 @@ const ExerciceAccords4Notes = ({ onReturn }) => {
     } else {
       setWrongButtons(prev => new Set([...prev, selectedType.label]));
       playErrorSound();
-      // Pause de 0,5s puis rejouer l'accord
-      setTimeout(() => playChord(), 500);
+      // Pause de 1,2s après le buzz puis rejouer l'accord
+      setTimeout(() => playChord(), 1200);
     }
   };
 

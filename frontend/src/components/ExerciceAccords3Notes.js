@@ -145,6 +145,7 @@ const ExerciceAccords3Notes = ({ onReturn }) => {
 
     if (isCorrect) {
       setPhase('type');
+      playSuccessSound();
     } else {
       playErrorSound();
       // Pause de 1,2s après le buzz puis rejouer l'accord

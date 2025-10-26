@@ -132,14 +132,16 @@ const ExerciceModesGrecs = ({ onReturn }) => {
             Écouter la gamme
           </button>
 
-          <button
-            onClick={handleReset}
-            className="btn-secondary flex items-center gap-2"
-            data-testid="btn-reset"
-          >
-            <RotateCcw size={20} />
-            Réinitialiser
-          </button>
+          {showSuccess && (
+            <button
+              onClick={handleNext}
+              className="btn-primary flex items-center gap-2"
+              data-testid="btn-next"
+              style={{ background: 'linear-gradient(135deg, #2d7a3e 0%, #1e5a2e 100%)' }}
+            >
+              Suivant →
+            </button>
+          )}
         </div>
 
         <div className="mb-6 p-4 rounded-lg" style={{ background: 'rgba(212, 175, 55, 0.2)', border: '2px solid #d4af37' }}>

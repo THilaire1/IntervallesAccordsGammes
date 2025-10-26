@@ -91,19 +91,17 @@ const ExerciceIntervalles = ({ onReturn }) => {
     if (selectedInterval.semitones === interval.semitones) {
       setSuccessCount(prev => prev + 1);
       setShowSuccess(true);
-      setTimeout(() => {
-        setShowSuccess(false);
-        generateNewInterval();
-      }, 1000);
     } else {
+      setShowSuccess(false);
       await Tone.start();
       errorSynthRef.current.triggerAttackRelease('C2', '0.1');
+      // Rejouer le son en cas d'erreur
+      setTimeout(() => playInterval(), 200);
     }
   };
 
-  const handleReset = () => {
-    setSuccessCount(0);
-    setAttemptCount(0);
+  const handleNext = () => {
+    setShowSuccess(false);
     generateNewInterval();
   };
 

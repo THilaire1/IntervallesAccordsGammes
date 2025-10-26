@@ -103,11 +103,29 @@ const ExerciceAccords4Notes = ({ onReturn }) => {
 
   const playUserNotes = async () => {
     await Tone.start();
-    // Jouer les notes sélectionnées par l'utilisateur en arpège lent
+    
+    // Ordre chromatique des notes
+    const chromaticOrder = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+    
+    // Trier les notes par ordre ascendant en assignant les octaves appropriées
+    const sortedNotes = [...userNotes].map((note, idx) => ({
+      note: note,
+      index: chromaticOrder.indexOf(note)
+    })).sort((a, b) => a.index - b.index);
+    
+    // Assigner les octaves pour que chaque note soit plus aigue que la précédente
+    let currentOctave = 3;
+    const notesWithOctaves = sortedNotes.map((item, idx) => {
+      if (idx > 0 && item.index <= sortedNotes[idx - 1].index) {
+        currentOctave++;
+      }
+      return item.note + currentOctave;
+    });
+    
+    // Jouer les notes en arpège lent
     const now = Tone.now();
-    userNotes.forEach((note, idx) => {
-      const noteWithOctave = note + '3'; // Utiliser octave 3 par défaut
-      synthRef.current.triggerAttackRelease(noteWithOctave, '0.5', now + (idx * 0.7));
+    notesWithOctaves.forEach((note, idx) => {
+      synthRef.current.triggerAttackRelease(note, '0.5', now + (idx * 0.7));
     });
   };
 

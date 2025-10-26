@@ -98,12 +98,15 @@ const ExerciceModesGrecs = ({ onReturn }) => {
 
   const handleAnswer = async (selectedMode) => {
     setAttemptCount(prev => prev + 1);
+    setClickedButton(selectedMode.name);
     
     if (selectedMode.name === currentMode.name) {
       setSuccessCount(prev => prev + 1);
       setShowSuccess(true);
+      setIsCorrect(true);
     } else {
       setShowSuccess(false);
+      setIsCorrect(false);
       await Tone.start();
       errorSynthRef.current.triggerAttackRelease('C2', '0.1');
       // Rejouer la gamme en cas d'erreur
@@ -113,6 +116,8 @@ const ExerciceModesGrecs = ({ onReturn }) => {
 
   const handleNext = () => {
     setShowSuccess(false);
+    setClickedButton(null);
+    setIsCorrect(null);
     generateNewMode();
   };
 

@@ -132,34 +132,6 @@ const ExerciceAccords3Notes = ({ onReturn }) => {
   }, [phase, selectedNoteIndex, userNotes]);
 
   // generateNewChord function moved above useEffect
-  const playChord = async () => {
-    const baseNotes = ['C2', 'D2', 'E2', 'F2', 'G2', 'A2', 'B2', 'C3', 'D3', 'E3', 'F3', 'G3', 'A3', 'B3', 'C4'];
-    const randomBase = baseNotes[Math.floor(Math.random() * baseNotes.length)];
-    const randomType = TYPES_ACCORDS[Math.floor(Math.random() * TYPES_ACCORDS.length)];
-    
-    const baseMidi = Tone.Frequency(randomBase).toMidi();
-    const chordNotes = randomType.intervals.map(interval => 
-      Tone.Frequency(baseMidi + interval, 'midi').toNote()
-    );
-    
-    // Vérifier que toutes les notes restent dans la plage C2-C5
-    const maxMidi = Tone.Frequency('C5').toMidi();
-    const allNotesInRange = chordNotes.every(note => 
-      Tone.Frequency(note).toMidi() <= maxMidi
-    );
-    
-    if (!allNotesInRange) {
-      // Recommencer avec une note de base plus basse
-      generateNewChord();
-      return;
-    }
-
-    setCurrentChord(chordNotes);
-    setChordType(randomType);
-    setPhase('notes');
-    setUserNotes(['C', 'E', 'G']);
-    setSelectedNoteIndex(0);
-  };
 
   const playChord = async () => {
     await Tone.start();

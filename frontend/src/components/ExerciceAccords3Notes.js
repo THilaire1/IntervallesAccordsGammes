@@ -131,7 +131,8 @@ const ExerciceAccords3Notes = ({ onReturn }) => {
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, [phase, selectedNoteIndex, userNotes]);
 
-  const generateNewChord = () => {
+  // generateNewChord function moved above useEffect
+  const playChord = async () => {
     const baseNotes = ['C2', 'D2', 'E2', 'F2', 'G2', 'A2', 'B2', 'C3', 'D3', 'E3', 'F3', 'G3', 'A3', 'B3', 'C4'];
     const randomBase = baseNotes[Math.floor(Math.random() * baseNotes.length)];
     const randomType = TYPES_ACCORDS[Math.floor(Math.random() * TYPES_ACCORDS.length)];

@@ -163,16 +163,36 @@ const ExerciceModesGrecs = ({ onReturn }) => {
         </div>
 
         <div className={`answer-buttons ${showSuccess ? 'success-animation' : ''}`}>
-          {MODES_GRECS.map((mode) => (
-            <button
-              key={mode.name}
-              onClick={() => handleAnswer(mode)}
-              className="answer-btn"
-              data-testid={`mode-${mode.name.toLowerCase()}`}
-            >
-              {mode.name}
-            </button>
-          ))}
+          {MODES_GRECS.map((mode) => {
+            let buttonStyle = {};
+            if (clickedButton === mode.name) {
+              if (isCorrect) {
+                buttonStyle = {
+                  background: 'linear-gradient(135deg, #2d7a3e 0%, #1e5a2e 100%)',
+                  color: '#fff',
+                  borderColor: '#2d7a3e'
+                };
+              } else {
+                buttonStyle = {
+                  background: 'linear-gradient(135deg, #8b2e2e 0%, #5a1e1e 100%)',
+                  color: '#fff',
+                  borderColor: '#8b2e2e'
+                };
+              }
+            }
+            
+            return (
+              <button
+                key={mode.name}
+                onClick={() => handleAnswer(mode)}
+                className="answer-btn"
+                style={buttonStyle}
+                data-testid={`mode-${mode.name.toLowerCase()}`}
+              >
+                {mode.name}
+              </button>
+            );
+          })}
         </div>
 
         <button

@@ -51,6 +51,11 @@ const ExerciceModesGrecs = ({ onReturn }) => {
   const synthRef = useRef(null);
   const errorSynthRef = useRef(null);
 
+  const generateNewMode = () => {
+    const randomMode = MODES_GRECS[Math.floor(Math.random() * MODES_GRECS.length)];
+    setCurrentMode(randomMode);
+  };
+
   useEffect(() => {
     // Utiliser des vrais samples de piano Salamander
     const sampler = new Tone.Sampler({
@@ -90,6 +95,7 @@ const ExerciceModesGrecs = ({ onReturn }) => {
       baseUrl: "https://tonejs.github.io/audio/salamander/",
       onload: () => {
         console.log("Piano samples loaded for modes");
+        generateNewMode();
       }
     }).toDestination();
     
@@ -100,21 +106,11 @@ const ExerciceModesGrecs = ({ onReturn }) => {
       envelope: { attack: 0.001, decay: 0.3, sustain: 0.1, release: 0.3 }
     }).toDestination();
 
-    // Attendre que les samples soient chargés avant de générer
-    Tone.loaded().then(() => {
-      generateNewMode();
-    });
-
     return () => {
       synthRef.current?.dispose();
       errorSynthRef.current?.dispose();
     };
   }, []);
-
-  const generateNewMode = () => {
-    const randomMode = MODES_GRECS[Math.floor(Math.random() * MODES_GRECS.length)];
-    setCurrentMode(randomMode);
-  };
 
   const playMode = async () => {
     await Tone.start();

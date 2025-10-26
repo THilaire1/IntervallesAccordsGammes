@@ -238,16 +238,36 @@ const ExerciceAccords4Notes = ({ onReturn }) => {
             </h3>
             
             <div className={`answer-buttons ${showSuccess ? 'success-animation' : ''}`}>
-              {TYPES_ACCORDS_4.map((type) => (
-                <button
-                  key={type.label}
-                  onClick={() => checkType(type)}
-                  className="answer-btn"
-                  data-testid={`chord-type-${type.label}`}
-                >
-                  {type.label}
-                </button>
-              ))}
+              {TYPES_ACCORDS_4.map((type) => {
+                let buttonStyle = {};
+                if (clickedButton === type.label) {
+                  if (isCorrect) {
+                    buttonStyle = {
+                      background: 'linear-gradient(135deg, #2d7a3e 0%, #1e5a2e 100%)',
+                      color: '#fff',
+                      borderColor: '#2d7a3e'
+                    };
+                  } else {
+                    buttonStyle = {
+                      background: 'linear-gradient(135deg, #8b2e2e 0%, #5a1e1e 100%)',
+                      color: '#fff',
+                      borderColor: '#8b2e2e'
+                    };
+                  }
+                }
+                
+                return (
+                  <button
+                    key={type.label}
+                    onClick={() => checkType(type)}
+                    className="answer-btn"
+                    style={buttonStyle}
+                    data-testid={`chord-type-${type.label}`}
+                  >
+                    {type.label}
+                  </button>
+                );
+              })}
             </div>
           </div>
         )}

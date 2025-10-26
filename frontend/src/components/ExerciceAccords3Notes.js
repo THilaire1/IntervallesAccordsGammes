@@ -242,20 +242,26 @@ const ExerciceAccords3Notes = ({ onReturn }) => {
             <div className={`answer-buttons ${showSuccess ? 'success-animation' : ''}`}>
               {TYPES_ACCORDS.map((type) => {
                 let buttonStyle = {};
-                if (clickedButton === type.label) {
-                  if (isCorrect) {
-                    buttonStyle = {
-                      background: 'linear-gradient(135deg, #2d7a3e 0%, #1e5a2e 100%)',
-                      color: '#fff',
-                      borderColor: '#2d7a3e'
-                    };
-                  } else {
-                    buttonStyle = {
-                      background: 'linear-gradient(135deg, #8b2e2e 0%, #5a1e1e 100%)',
-                      color: '#fff',
-                      borderColor: '#8b2e2e'
-                    };
-                  }
+                let isDisabled = false;
+                
+                if (correctButton === type.label) {
+                  buttonStyle = {
+                    background: 'linear-gradient(135deg, #2d7a3e 0%, #1e5a2e 100%)',
+                    color: '#fff',
+                    borderColor: '#2d7a3e'
+                  };
+                  isDisabled = true;
+                } else if (wrongButtons.has(type.label)) {
+                  buttonStyle = {
+                    background: 'linear-gradient(135deg, #8b2e2e 0%, #5a1e1e 100%)',
+                    color: '#fff',
+                    borderColor: '#8b2e2e'
+                  };
+                  isDisabled = true;
+                }
+                
+                if (showSuccess) {
+                  isDisabled = true;
                 }
                 
                 return (
@@ -264,6 +270,7 @@ const ExerciceAccords3Notes = ({ onReturn }) => {
                     onClick={() => checkType(type)}
                     className="answer-btn"
                     style={buttonStyle}
+                    disabled={isDisabled}
                     data-testid={`chord-type-${type.label}`}
                   >
                     {type.label}

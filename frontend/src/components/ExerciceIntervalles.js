@@ -181,8 +181,8 @@ const ExerciceIntervalles = ({ onReturn }) => {
     } else {
       setWrongButtons(prev => new Set([...prev, selectedInterval.label]));
       playErrorSound();
-      // Pause de 0,5s puis rejouer le son
-      setTimeout(() => playInterval(), 500);
+      // Pause de 1,2s après le buzz puis rejouer le son
+      setTimeout(() => playInterval(), 1200);
     }
   };
 

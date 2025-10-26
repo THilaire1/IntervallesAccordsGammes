@@ -98,7 +98,7 @@ const ExerciceIntervalles = ({ onReturn }) => {
 
   useEffect(() => {
     // Utiliser des vrais samples de piano Salamander
-    synthRef.current = new Tone.Sampler({
+    const sampler = new Tone.Sampler({
       urls: {
         A0: "A0.mp3",
         C1: "C1.mp3",
@@ -132,15 +132,23 @@ const ExerciceIntervalles = ({ onReturn }) => {
         C8: "C8.mp3"
       },
       release: 1,
-      baseUrl: "https://tonejs.github.io/audio/salamander/"
+      baseUrl: "https://tonejs.github.io/audio/salamander/",
+      onload: () => {
+        console.log("Piano samples loaded");
+      }
     }).toDestination();
+    
+    synthRef.current = sampler;
 
     errorSynthRef.current = new Tone.Synth({
       oscillator: { type: 'sawtooth' },
       envelope: { attack: 0.001, decay: 0.3, sustain: 0.1, release: 0.3 }
     }).toDestination();
 
-    generateNewInterval();
+    // Attendre que les samples soient chargés avant de générer
+    Tone.loaded().then(() => {
+      generateNewInterval();
+    });
 
     return () => {
       synthRef.current?.dispose();

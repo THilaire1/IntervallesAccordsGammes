@@ -178,6 +178,7 @@ const ExerciceIntervalles = ({ onReturn }) => {
   }, []);
 
   const playInterval = async () => {
+    if (!isLoaded || !synthRef.current) return;
     await Tone.start();
     const now = Tone.now();
     synthRef.current.triggerAttackRelease(note1, '0.5', now);

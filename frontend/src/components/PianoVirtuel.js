@@ -47,7 +47,10 @@ const PianoVirtuel = ({ synth }) => {
           C8: "C8.mp3"
         },
         release: 1,
-        baseUrl: "https://tonejs.github.io/audio/salamander/"
+        baseUrl: "https://tonejs.github.io/audio/salamander/",
+        onload: () => {
+          console.log("Piano virtuel samples loaded");
+        }
       }).toDestination();
       
       setLocalSynth(newSynth);

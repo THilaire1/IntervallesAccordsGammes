@@ -28,24 +28,22 @@ const EXEMPLES_CHANSONS = {
     { titre: 'Frère Jacques', direction: 'asc' },
     { titre: 'Joyeux Anniversaire', direction: 'asc' },
     { titre: 'Au Clair de la Lune', direction: 'asc' },
-    { titre: 'Yesterday', direction: 'desc' },
-    { titre: 'Blue Bossa', direction: 'desc' }
+    { titre: 'Yesterday (Beatles)', direction: 'desc' }
   ],
   3: [
     { titre: 'Greensleeves', direction: 'asc' },
     { titre: 'La Panthère Rose (thème)', direction: 'asc' },
     { titre: 'Smoke on the Water', direction: 'desc' },
-    { titre: 'Summertime', direction: 'desc' }
+    { titre: 'Hey Jude (refrain)', direction: 'desc' }
   ],
   4: [
-    { titre: 'La Marseillaise (début)', direction: 'asc' },
     { titre: 'Oh When the Saints', direction: 'asc' },
-    { titre: 'Can\'t Help Falling in Love', direction: 'asc' },
-    { titre: 'Born to be Wild', direction: 'desc' }
+    { titre: 'Hymne à la joie (Beethoven)', direction: 'asc' },
+    { titre: 'Can\'t Help Falling in Love', direction: 'asc' }
   ],
   5: [
     { titre: 'La Marseillaise ("Allons enfants")', direction: 'asc' },
-    { titre: 'De bon matin', direction: 'desc' },
+    { titre: 'Here Comes the Bride', direction: 'asc' },
     { titre: 'Amazing Grace', direction: 'desc' }
   ],
   6: [
@@ -59,19 +57,18 @@ const EXEMPLES_CHANSONS = {
     { titre: 'Flinstones (thème)', direction: 'desc' }
   ],
   8: [
-    { titre: 'My Bonnie', direction: 'asc' },
-    { titre: 'In the Mood', direction: 'asc' },
-    { titre: 'Nobody Knows', direction: 'desc' }
+    { titre: 'Love Story (thème)', direction: 'desc' },
+    { titre: 'In My Life (Beatles)', direction: 'desc' },
+    { titre: 'Killing Me Softly', direction: 'asc' }
   ],
   9: [
     { titre: 'Il était un petit navire', direction: 'asc' },
     { titre: 'My Way', direction: 'asc' },
-    { titre: 'A Whole New World', direction: 'asc' },
-    { titre: 'Love Story (thème)', direction: 'desc' }
+    { titre: 'Nobody Knows (Trouble)', direction: 'desc' }
   ],
   10: [
     { titre: 'Winning (thème)', direction: 'asc' },
-    { titre: 'The Flintstones', direction: 'asc' },
+    { titre: 'There\'s a Place for Us', direction: 'asc' },
     { titre: 'Watermelon Man', direction: 'desc' }
   ],
   11: [

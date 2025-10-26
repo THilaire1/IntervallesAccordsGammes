@@ -23,6 +23,7 @@ const ExerciceAccords4Notes = ({ onReturn }) => {
   const [showSuccess, setShowSuccess] = useState(false);
   const [wrongButtons, setWrongButtons] = useState(new Set());
   const [correctButton, setCorrectButton] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
   const synthRef = useRef(null);
   const errorSynthRef = useRef(null);
 

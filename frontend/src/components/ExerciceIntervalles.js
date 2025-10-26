@@ -89,12 +89,15 @@ const ExerciceIntervalles = ({ onReturn }) => {
 
   const handleAnswer = async (selectedInterval) => {
     setAttemptCount(prev => prev + 1);
+    setClickedButton(selectedInterval.label);
     
     if (selectedInterval.semitones === interval.semitones) {
       setSuccessCount(prev => prev + 1);
       setShowSuccess(true);
+      setIsCorrect(true);
     } else {
       setShowSuccess(false);
+      setIsCorrect(false);
       await Tone.start();
       errorSynthRef.current.triggerAttackRelease('C2', '0.1');
       // Rejouer le son en cas d'erreur
@@ -104,6 +107,9 @@ const ExerciceIntervalles = ({ onReturn }) => {
 
   const handleNext = () => {
     setShowSuccess(false);
+    setClickedButton(null);
+    setIsCorrect(null);
+    setShowHelp(false);
     generateNewInterval();
   };
 

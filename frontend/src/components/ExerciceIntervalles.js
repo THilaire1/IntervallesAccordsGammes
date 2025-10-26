@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import * as Tone from 'tone';
-import { Volume2, HelpCircle, RotateCcw } from 'lucide-react';
+import { Volume2, HelpCircle } from 'lucide-react';
 import PianoVirtuel from './PianoVirtuel';
 
 const INTERVALLES = [

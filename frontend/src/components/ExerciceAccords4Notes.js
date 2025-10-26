@@ -101,6 +101,16 @@ const ExerciceAccords4Notes = ({ onReturn }) => {
     });
   };
 
+  const playUserNotes = async () => {
+    await Tone.start();
+    // Jouer les notes sélectionnées par l'utilisateur en arpège lent
+    const now = Tone.now();
+    userNotes.forEach((note, idx) => {
+      const noteWithOctave = note + '3'; // Utiliser octave 3 par défaut
+      synthRef.current.triggerAttackRelease(noteWithOctave, '0.5', now + (idx * 0.7));
+    });
+  };
+
   const changeNote = (direction) => {
     const currentNoteIndex = NOTES.indexOf(userNotes[selectedNoteIndex]);
     const newNoteIndex = (currentNoteIndex + direction + NOTES.length) % NOTES.length;

@@ -101,6 +101,7 @@ const PianoVirtuel = ({ synth }) => {
   }, [isDragging, dragOffset]);
 
   const playNote = async (note) => {
+    if (!isLoaded) return;
     await Tone.start();
     const activeSynth = synth || localSynth;
     if (activeSynth) {

@@ -42,8 +42,8 @@ const ExerciceIntervalles = ({ onReturn }) => {
   const [attemptCount, setAttemptCount] = useState(0);
   const [showSuccess, setShowSuccess] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
-  const [clickedButton, setClickedButton] = useState(null);
-  const [isCorrect, setIsCorrect] = useState(null);
+  const [wrongButtons, setWrongButtons] = useState(new Set());
+  const [correctButton, setCorrectButton] = useState(null);
   const synthRef = useRef(null);
   const errorSynthRef = useRef(null);
 

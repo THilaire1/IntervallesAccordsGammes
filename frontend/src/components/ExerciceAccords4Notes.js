@@ -63,7 +63,7 @@ const ExerciceAccords4Notes = ({ onReturn }) => {
   }, [phase, selectedNoteIndex, userNotes]);
 
   const generateNewChord = () => {
-    const baseNotes = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4'];
+    const baseNotes = ['C2', 'D2', 'E2', 'F2', 'G2', 'A2', 'B2', 'C3', 'D3', 'E3', 'F3', 'G3', 'A3', 'B3'];
     const randomBase = baseNotes[Math.floor(Math.random() * baseNotes.length)];
     const randomType = TYPES_ACCORDS_4[Math.floor(Math.random() * TYPES_ACCORDS_4.length)];
     
@@ -71,6 +71,18 @@ const ExerciceAccords4Notes = ({ onReturn }) => {
     const chordNotes = randomType.intervals.map(interval => 
       Tone.Frequency(baseMidi + interval, 'midi').toNote()
     );
+    
+    // Vérifier que toutes les notes restent dans la plage C2-C5
+    const maxMidi = Tone.Frequency('C5').toMidi();
+    const allNotesInRange = chordNotes.every(note => 
+      Tone.Frequency(note).toMidi() <= maxMidi
+    );
+    
+    if (!allNotesInRange) {
+      // Recommencer avec une note de base plus basse
+      generateNewChord();
+      return;
+    }
 
     setCurrentChord(chordNotes);
     setChordType(randomType);

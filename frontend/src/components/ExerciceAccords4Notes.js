@@ -119,12 +119,15 @@ const ExerciceAccords4Notes = ({ onReturn }) => {
 
   const checkType = async (selectedType) => {
     setAttemptCount(prev => prev + 1);
+    setClickedButton(selectedType.label);
     
     if (selectedType.label === chordType.label) {
       setSuccessCount(prev => prev + 1);
       setShowSuccess(true);
+      setIsCorrect(true);
     } else {
       setShowSuccess(false);
+      setIsCorrect(false);
       await Tone.start();
       errorSynthRef.current.triggerAttackRelease('C2', '0.1');
       // Rejouer l'accord en cas d'erreur
@@ -134,6 +137,8 @@ const ExerciceAccords4Notes = ({ onReturn }) => {
 
   const handleNext = () => {
     setShowSuccess(false);
+    setClickedButton(null);
+    setIsCorrect(null);
     generateNewChord();
   };
 

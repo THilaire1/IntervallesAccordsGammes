@@ -96,6 +96,7 @@ const ExerciceAccords3Notes = ({ onReturn }) => {
       baseUrl: "https://tonejs.github.io/audio/salamander/",
       onload: () => {
         console.log("Piano samples loaded for chords");
+        setIsLoaded(true);
         generateNewChord();
       }
     }).toDestination();

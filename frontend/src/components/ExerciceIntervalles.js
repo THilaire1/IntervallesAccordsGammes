@@ -241,9 +241,11 @@ const ExerciceIntervalles = ({ onReturn }) => {
             onClick={playInterval}
             className="btn-primary flex items-center gap-2"
             data-testid="btn-play-interval"
+            disabled={!isLoaded}
+            style={!isLoaded ? { opacity: 0.5, cursor: 'not-allowed' } : {}}
           >
             <Volume2 size={20} />
-            Écouter l'intervalle
+            {isLoaded ? 'Écouter l\'intervalle' : 'Chargement...'}
           </button>
 
           <button

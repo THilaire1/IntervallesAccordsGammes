@@ -6,6 +6,7 @@ const PianoVirtuel = ({ synth }) => {
   const [activeKeys, setActiveKeys] = useState(new Set());
   const [localSynth, setLocalSynth] = useState(null);
   const [isVisible, setIsVisible] = useState(true);
+  const [isLoaded, setIsLoaded] = useState(false);
   const [position, setPosition] = useState({ x: 20, y: window.innerHeight - 250 });
   const [isDragging, setIsDragging] = useState(false);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
@@ -50,6 +51,7 @@ const PianoVirtuel = ({ synth }) => {
         baseUrl: "https://tonejs.github.io/audio/salamander/",
         onload: () => {
           console.log("Piano virtuel samples loaded");
+          setIsLoaded(true);
         }
       }).toDestination();
       
@@ -58,6 +60,9 @@ const PianoVirtuel = ({ synth }) => {
       return () => {
         newSynth.dispose();
       };
+    } else {
+      // Si un synth est fourni depuis l'exercice, on considère qu'il est déjà chargé
+      setIsLoaded(true);
     }
   }, [synth]);
 

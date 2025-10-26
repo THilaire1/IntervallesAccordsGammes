@@ -153,14 +153,16 @@ const ExerciceAccords4Notes = ({ onReturn }) => {
             Écouter l'accord
           </button>
 
-          <button
-            onClick={handleReset}
-            className="btn-secondary flex items-center gap-2"
-            data-testid="btn-reset"
-          >
-            <RotateCcw size={20} />
-            Réinitialiser
-          </button>
+          {showSuccess && (
+            <button
+              onClick={handleNext}
+              className="btn-primary flex items-center gap-2"
+              data-testid="btn-next"
+              style={{ background: 'linear-gradient(135deg, #2d7a3e 0%, #1e5a2e 100%)' }}
+            >
+              Suivant →
+            </button>
+          )}
         </div>
 
         {phase === 'notes' && (

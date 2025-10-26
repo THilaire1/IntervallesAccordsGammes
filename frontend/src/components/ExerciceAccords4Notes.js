@@ -105,11 +105,6 @@ const ExerciceAccords4Notes = ({ onReturn }) => {
       envelope: { attack: 0.001, decay: 0.3, sustain: 0.1, release: 0.3 }
     }).toDestination();
 
-    // Attendre que les samples soient chargés avant de générer
-    Tone.loaded().then(() => {
-      generateNewChord();
-    });
-
     return () => {
       synthRef.current?.dispose();
       errorSynthRef.current?.dispose();

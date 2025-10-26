@@ -35,11 +35,12 @@ const PianoVirtuel = ({ synth }) => {
     }
   };
 
-  // 3 octaves de Do4 à Do6
+  // 3 octaves de Do2 à Do5
   const octaves = [
+    { white: ['C2', 'D2', 'E2', 'F2', 'G2', 'A2', 'B2'], black: ['C#2', 'D#2', null, 'F#2', 'G#2', 'A#2', null] },
+    { white: ['C3', 'D3', 'E3', 'F3', 'G3', 'A3', 'B3'], black: ['C#3', 'D#3', null, 'F#3', 'G#3', 'A#3', null] },
     { white: ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4'], black: ['C#4', 'D#4', null, 'F#4', 'G#4', 'A#4', null] },
-    { white: ['C5', 'D5', 'E5', 'F5', 'G5', 'A5', 'B5'], black: ['C#5', 'D#5', null, 'F#5', 'G#5', 'A#5', null] },
-    { white: ['C6'], black: [] }
+    { white: ['C5'], black: [] }
   ];
 
   return (

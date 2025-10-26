@@ -181,8 +181,8 @@ const ExerciceIntervalles = ({ onReturn }) => {
     } else {
       setWrongButtons(prev => new Set([...prev, selectedInterval.label]));
       playErrorSound();
-      // Rejouer le son en cas d'erreur
-      setTimeout(() => playInterval(), 600);
+      // Pause de 0,5s puis rejouer le son
+      setTimeout(() => playInterval(), 500);
     }
   };
 

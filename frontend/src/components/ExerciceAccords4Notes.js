@@ -97,6 +97,28 @@ const ExerciceAccords4Notes = ({ onReturn }) => {
     setUserNotes(newNotes);
   };
 
+  const playSuccessSound = async () => {
+    await Tone.start();
+    const bellSynth = new Tone.Synth({
+      oscillator: { type: 'sine' },
+      envelope: { attack: 0.001, decay: 0.2, sustain: 0, release: 0.5 }
+    }).toDestination();
+    
+    const now = Tone.now();
+    bellSynth.triggerAttackRelease('E5', '0.15', now);
+    bellSynth.triggerAttackRelease('G5', '0.15', now + 0.08);
+    
+    setTimeout(() => bellSynth.dispose(), 1000);
+  };
+
+  const playErrorSound = async () => {
+    await Tone.start();
+    errorSynthRef.current.triggerAttackRelease('A2', '0.4');
+    setTimeout(() => {
+      errorSynthRef.current.triggerAttackRelease('F2', '0.4');
+    }, 100);
+  };
+
   const checkNotes = async () => {
     setAttemptCount(prev => prev + 1);
     
@@ -110,10 +132,9 @@ const ExerciceAccords4Notes = ({ onReturn }) => {
     if (isCorrect) {
       setPhase('type');
     } else {
-      await Tone.start();
-      errorSynthRef.current.triggerAttackRelease('C2', '0.1');
+      playErrorSound();
       // Rejouer l'accord en cas d'erreur
-      setTimeout(() => playChord(), 200);
+      setTimeout(() => playChord(), 600);
     }
   };
 
@@ -126,12 +147,12 @@ const ExerciceAccords4Notes = ({ onReturn }) => {
       setSuccessCount(prev => prev + 1);
       setShowSuccess(true);
       setCorrectButton(selectedType.label);
+      playSuccessSound();
     } else {
       setWrongButtons(prev => new Set([...prev, selectedType.label]));
-      await Tone.start();
-      errorSynthRef.current.triggerAttackRelease('C2', '0.1');
+      playErrorSound();
       // Rejouer l'accord en cas d'erreur
-      setTimeout(() => playChord(), 200);
+      setTimeout(() => playChord(), 600);
     }
   };
 

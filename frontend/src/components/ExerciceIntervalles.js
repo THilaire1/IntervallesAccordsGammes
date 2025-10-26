@@ -164,16 +164,36 @@ const ExerciceIntervalles = ({ onReturn }) => {
         )}
 
         <div className={`answer-buttons ${showSuccess ? 'success-animation' : ''}`}>
-          {INTERVALLES.map((int) => (
-            <button
-              key={int.label}
-              onClick={() => handleAnswer(int)}
-              className="answer-btn"
-              data-testid={`interval-${int.label}`}
-            >
-              {int.label}
-            </button>
-          ))}
+          {INTERVALLES.map((int) => {
+            let buttonStyle = {};
+            if (clickedButton === int.label) {
+              if (isCorrect) {
+                buttonStyle = {
+                  background: 'linear-gradient(135deg, #2d7a3e 0%, #1e5a2e 100%)',
+                  color: '#fff',
+                  borderColor: '#2d7a3e'
+                };
+              } else {
+                buttonStyle = {
+                  background: 'linear-gradient(135deg, #8b2e2e 0%, #5a1e1e 100%)',
+                  color: '#fff',
+                  borderColor: '#8b2e2e'
+                };
+              }
+            }
+            
+            return (
+              <button
+                key={int.label}
+                onClick={() => handleAnswer(int)}
+                className="answer-btn"
+                style={buttonStyle}
+                data-testid={`interval-${int.label}`}
+              >
+                {int.label}
+              </button>
+            );
+          })}
         </div>
 
         <button

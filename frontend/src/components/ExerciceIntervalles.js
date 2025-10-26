@@ -9,8 +9,7 @@ const INTERVALLES = [
   { label: '3m', name: 'Tierce mineure', semitones: 3 },
   { label: '3M', name: 'Tierce majeure', semitones: 4 },
   { label: '4j', name: 'Quarte juste', semitones: 5 },
-  { label: '4+', name: 'Quarte augmentée', semitones: 6 },
-  { label: '5-', name: 'Quinte diminuée', semitones: 6 },
+  { label: '4+', name: 'Quarte augmentée (triton)', semitones: 6 },
   { label: '5j', name: 'Quinte juste', semitones: 7 },
   { label: '6m', name: 'Sixte mineure', semitones: 8 },
   { label: '6M', name: 'Sixte majeure', semitones: 9 },
@@ -20,18 +19,71 @@ const INTERVALLES = [
 ];
 
 const EXEMPLES_CHANSONS = {
-  1: ['Les Dents de la Mer (thème)', 'Jaws Theme'],
-  2: ['Joyeux Anniversaire', 'Frère Jacques', 'Au Clair de la Lune'],
-  3: ['Greensleeves', 'Smoke on the Water', 'Summertime'],
-  4: ['Can\'t Help Falling in Love', 'Oh When the Saints', 'La Marseillaise'],
-  5: ['Here Comes the Bride', 'Amazing Grace'],
-  6: ['Maria (West Side Story)', 'The Simpsons Theme'],
-  7: ['Star Wars Theme', 'Twinkle Twinkle Little Star'],
-  8: ['Somewhere Over the Rainbow', 'My Bonnie'],
-  9: ['My Way', 'A Whole New World'],
-  10: ['West Side Story - Maria', 'Swing Low Sweet Chariot'],
-  11: ['The Simpsons Theme', 'I Love You (Barney)'],
-  12: ['Take on Me', 'Somewhere Over the Rainbow (octave)'],
+  1: [
+    { titre: 'Les Dents de la mer (thème)', direction: 'asc' },
+    { titre: 'Lettre à Élise', direction: 'desc' },
+    { titre: 'Jaws Theme', direction: 'asc' }
+  ],
+  2: [
+    { titre: 'Frère Jacques', direction: 'asc' },
+    { titre: 'Joyeux Anniversaire', direction: 'asc' },
+    { titre: 'Au Clair de la Lune', direction: 'asc' },
+    { titre: 'Yesterday', direction: 'desc' },
+    { titre: 'Blue Bossa', direction: 'desc' }
+  ],
+  3: [
+    { titre: 'Greensleeves', direction: 'asc' },
+    { titre: 'La Panthère Rose (thème)', direction: 'asc' },
+    { titre: 'Smoke on the Water', direction: 'desc' },
+    { titre: 'Summertime', direction: 'desc' }
+  ],
+  4: [
+    { titre: 'La Marseillaise (début)', direction: 'asc' },
+    { titre: 'Oh When the Saints', direction: 'asc' },
+    { titre: 'Can\'t Help Falling in Love', direction: 'asc' },
+    { titre: 'Born to be Wild', direction: 'desc' }
+  ],
+  5: [
+    { titre: 'La Marseillaise ("Allons enfants")', direction: 'asc' },
+    { titre: 'De bon matin', direction: 'desc' },
+    { titre: 'Amazing Grace', direction: 'desc' }
+  ],
+  6: [
+    { titre: 'Maria (West Side Story)', direction: 'asc' },
+    { titre: 'The Simpsons (thème)', direction: 'asc' },
+    { titre: 'Purple Haze', direction: 'desc' }
+  ],
+  7: [
+    { titre: 'Star Wars (thème)', direction: 'asc' },
+    { titre: 'Twinkle Twinkle Little Star', direction: 'asc' },
+    { titre: 'Flinstones (thème)', direction: 'desc' }
+  ],
+  8: [
+    { titre: 'My Bonnie', direction: 'asc' },
+    { titre: 'In the Mood', direction: 'asc' },
+    { titre: 'Nobody Knows', direction: 'desc' }
+  ],
+  9: [
+    { titre: 'Il était un petit navire', direction: 'asc' },
+    { titre: 'My Way', direction: 'asc' },
+    { titre: 'A Whole New World', direction: 'asc' },
+    { titre: 'Love Story (thème)', direction: 'desc' }
+  ],
+  10: [
+    { titre: 'Winning (thème)', direction: 'asc' },
+    { titre: 'The Flintstones', direction: 'asc' },
+    { titre: 'Watermelon Man', direction: 'desc' }
+  ],
+  11: [
+    { titre: 'Take on Me (refrain)', direction: 'asc' },
+    { titre: 'I Love You (Barney)', direction: 'asc' },
+    { titre: 'Black Orpheus', direction: 'desc' }
+  ],
+  12: [
+    { titre: 'Somewhere Over the Rainbow', direction: 'asc' },
+    { titre: 'A Hard Day\'s Night', direction: 'asc' },
+    { titre: 'Singin\' in the Rain', direction: 'desc' }
+  ],
 };
 
 const ExerciceIntervalles = ({ onReturn }) => {

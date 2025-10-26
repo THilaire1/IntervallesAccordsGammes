@@ -87,6 +87,30 @@ const ExerciceIntervalles = ({ onReturn }) => {
     synthRef.current.triggerAttackRelease(note2, '0.5', now + 0.6);
   };
 
+  const playSuccessSound = async () => {
+    await Tone.start();
+    // Son de clochette (ding) - notes aiguës rapides
+    const bellSynth = new Tone.Synth({
+      oscillator: { type: 'sine' },
+      envelope: { attack: 0.001, decay: 0.2, sustain: 0, release: 0.5 }
+    }).toDestination();
+    
+    const now = Tone.now();
+    bellSynth.triggerAttackRelease('E5', '0.15', now);
+    bellSynth.triggerAttackRelease('G5', '0.15', now + 0.08);
+    
+    setTimeout(() => bellSynth.dispose(), 1000);
+  };
+
+  const playErrorSound = async () => {
+    await Tone.start();
+    // Son de buzz - note grave qui descend
+    errorSynthRef.current.triggerAttackRelease('A2', '0.4');
+    setTimeout(() => {
+      errorSynthRef.current.triggerAttackRelease('F2', '0.4');
+    }, 100);
+  };
+
   const handleAnswer = async (selectedInterval) => {
     if (showSuccess) return; // Désactiver les clics après succès
     
@@ -96,12 +120,12 @@ const ExerciceIntervalles = ({ onReturn }) => {
       setSuccessCount(prev => prev + 1);
       setShowSuccess(true);
       setCorrectButton(selectedInterval.label);
+      playSuccessSound();
     } else {
       setWrongButtons(prev => new Set([...prev, selectedInterval.label]));
-      await Tone.start();
-      errorSynthRef.current.triggerAttackRelease('C2', '0.1');
+      playErrorSound();
       // Rejouer le son en cas d'erreur
-      setTimeout(() => playInterval(), 200);
+      setTimeout(() => playInterval(), 600);
     }
   };
 

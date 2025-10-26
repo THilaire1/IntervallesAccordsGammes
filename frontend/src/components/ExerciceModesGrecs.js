@@ -96,6 +96,7 @@ const ExerciceModesGrecs = ({ onReturn }) => {
       baseUrl: "https://tonejs.github.io/audio/salamander/",
       onload: () => {
         console.log("Piano samples loaded for modes");
+        setIsLoaded(true);
         generateNewMode();
       }
     }).toDestination();

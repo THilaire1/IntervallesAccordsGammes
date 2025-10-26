@@ -64,7 +64,10 @@ const ExerciceAccords3Notes = ({ onReturn }) => {
         C8: "C8.mp3"
       },
       release: 1,
-      baseUrl: "https://tonejs.github.io/audio/salamander/"
+      baseUrl: "https://tonejs.github.io/audio/salamander/",
+      onload: () => {
+        console.log("Piano samples loaded for chords");
+      }
     }).toDestination();
     
     synthRef.current = sampler;
@@ -74,7 +77,10 @@ const ExerciceAccords3Notes = ({ onReturn }) => {
       envelope: { attack: 0.001, decay: 0.3, sustain: 0.1, release: 0.3 }
     }).toDestination();
 
-    generateNewChord();
+    // Attendre que les samples soient chargés avant de générer
+    Tone.loaded().then(() => {
+      generateNewChord();
+    });
 
     return () => {
       synthRef.current?.dispose();

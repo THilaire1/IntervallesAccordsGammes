@@ -131,8 +131,8 @@ const ExerciceModesGrecs = ({ onReturn }) => {
     } else {
       setWrongButtons(prev => new Set([...prev, selectedMode.name]));
       playErrorSound();
-      // Rejouer la gamme en cas d'erreur
-      setTimeout(() => playMode(), 600);
+      // Pause de 0,5s puis rejouer la gamme
+      setTimeout(() => playMode(), 500);
     }
   };
 

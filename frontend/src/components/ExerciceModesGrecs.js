@@ -77,7 +77,7 @@ const ExerciceModesGrecs = ({ onReturn }) => {
 
   const playMode = async () => {
     await Tone.start();
-    const baseNote = Tone.Frequency('C4').toMidi();
+    const baseNote = Tone.Frequency('C3').toMidi();
     const scaleNotes = currentMode.intervals.map(interval => 
       Tone.Frequency(baseNote + interval, 'midi').toNote()
     );

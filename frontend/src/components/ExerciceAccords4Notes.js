@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import * as Tone from 'tone';
-import { Volume2, RotateCcw, ArrowUp, ArrowDown } from 'lucide-react';
+import { Volume2, ArrowUp, ArrowDown } from 'lucide-react';
 import PianoVirtuel from './PianoVirtuel';
 
 const NOTES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];

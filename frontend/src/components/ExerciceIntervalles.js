@@ -158,6 +158,7 @@ const ExerciceIntervalles = ({ onReturn }) => {
       baseUrl: "https://tonejs.github.io/audio/salamander/",
       onload: () => {
         console.log("Piano samples loaded");
+        setIsLoaded(true);
         // Générer l'intervalle une fois les samples chargés
         generateNewInterval();
       }

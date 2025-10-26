@@ -55,7 +55,7 @@ const ExerciceIntervalles = ({ onReturn }) => {
 
     errorSynthRef.current = new Tone.Synth({
       oscillator: { type: 'sawtooth' },
-      envelope: { attack: 0.001, decay: 0.1, sustain: 0, release: 0.1 }
+      envelope: { attack: 0.001, decay: 0.3, sustain: 0.1, release: 0.3 }
     }).toDestination();
 
     generateNewInterval();

@@ -112,6 +112,8 @@ const ExerciceAccords3Notes = ({ onReturn }) => {
     } else {
       await Tone.start();
       errorSynthRef.current.triggerAttackRelease('C2', '0.1');
+      // Rejouer l'accord en cas d'erreur
+      setTimeout(() => playChord(), 200);
     }
   };
 
@@ -121,19 +123,17 @@ const ExerciceAccords3Notes = ({ onReturn }) => {
     if (selectedType.label === chordType.label) {
       setSuccessCount(prev => prev + 1);
       setShowSuccess(true);
-      setTimeout(() => {
-        setShowSuccess(false);
-        generateNewChord();
-      }, 1000);
     } else {
+      setShowSuccess(false);
       await Tone.start();
       errorSynthRef.current.triggerAttackRelease('C2', '0.1');
+      // Rejouer l'accord en cas d'erreur
+      setTimeout(() => playChord(), 200);
     }
   };
 
-  const handleReset = () => {
-    setSuccessCount(0);
-    setAttemptCount(0);
+  const handleNext = () => {
+    setShowSuccess(false);
     generateNewChord();
   };
 

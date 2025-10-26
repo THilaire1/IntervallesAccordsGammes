@@ -153,8 +153,21 @@ const ExerciceAccords3Notes = ({ onReturn }) => {
     }
   };
 
+  const playChordPreview = (type) => {
+    // Jouer l'accord correspondant au type sélectionné
+    const baseMidi = Tone.Frequency(currentChord[0]).toMidi();
+    const previewNotes = type.intervals.map(interval => 
+      Tone.Frequency(baseMidi + interval, 'midi').toNote()
+    );
+    
+    synthRef.current.triggerAttackRelease(previewNotes, '0.8');
+  };
+
   const checkType = async (selectedType) => {
     if (showSuccess) return; // Désactiver les clics après succès
+    
+    // Jouer le son de l'accord cliqué
+    playChordPreview(selectedType);
     
     setAttemptCount(prev => prev + 1);
     
@@ -162,12 +175,14 @@ const ExerciceAccords3Notes = ({ onReturn }) => {
       setSuccessCount(prev => prev + 1);
       setShowSuccess(true);
       setCorrectButton(selectedType.label);
-      playSuccessSound();
+      setTimeout(() => playSuccessSound(), 900);
     } else {
       setWrongButtons(prev => new Set([...prev, selectedType.label]));
-      playErrorSound();
-      // Pause de 1,2s après le buzz puis rejouer l'accord
-      setTimeout(() => playChord(), 1200);
+      setTimeout(() => {
+        playErrorSound();
+        // Pause de 1,2s après le buzz puis rejouer l'accord
+        setTimeout(() => playChord(), 1200);
+      }, 900);
     }
   };
 

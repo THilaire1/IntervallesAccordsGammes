@@ -240,8 +240,13 @@ const ExerciceIntervalles = ({ onReturn }) => {
           <div className="mb-6 p-4 rounded-lg" style={{ background: 'rgba(212, 175, 55, 0.2)', border: '2px solid #d4af37' }}>
             <h3 className="text-lg font-semibold mb-2" style={{ color: '#4a3f2a' }}>Exemples pour cet intervalle :</h3>
             <ul className="list-disc list-inside" style={{ color: '#6b5b3f' }}>
-              {EXEMPLES_CHANSONS[interval.semitones]?.map((chanson, idx) => (
-                <li key={idx} className="py-1">{chanson}</li>
+              {EXEMPLES_CHANSONS[interval.semitones]?.map((exemple, idx) => (
+                <li key={idx} className="py-1">
+                  <strong>{exemple.titre}</strong>
+                  <span style={{ fontSize: '0.85rem', marginLeft: '8px', opacity: 0.8 }}>
+                    ({exemple.direction === 'asc' ? '↑ ascendant' : '↓ descendant'})
+                  </span>
+                </li>
               ))}
             </ul>
           </div>

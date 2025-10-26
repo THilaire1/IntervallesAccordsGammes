@@ -248,3 +248,8 @@ h1, h2, h3 {
 .answer-btn:active {
   transform: scale(0.98);
 }
+
+.answer-btn:disabled {
+  cursor: not-allowed;
+  opacity: 1;
+}

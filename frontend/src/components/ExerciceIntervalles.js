@@ -88,16 +88,16 @@ const ExerciceIntervalles = ({ onReturn }) => {
   };
 
   const handleAnswer = async (selectedInterval) => {
+    if (showSuccess) return; // Désactiver les clics après succès
+    
     setAttemptCount(prev => prev + 1);
-    setClickedButton(selectedInterval.label);
     
     if (selectedInterval.semitones === interval.semitones) {
       setSuccessCount(prev => prev + 1);
       setShowSuccess(true);
-      setIsCorrect(true);
+      setCorrectButton(selectedInterval.label);
     } else {
-      setShowSuccess(false);
-      setIsCorrect(false);
+      setWrongButtons(prev => new Set([...prev, selectedInterval.label]));
       await Tone.start();
       errorSynthRef.current.triggerAttackRelease('C2', '0.1');
       // Rejouer le son en cas d'erreur
@@ -107,8 +107,8 @@ const ExerciceIntervalles = ({ onReturn }) => {
 
   const handleNext = () => {
     setShowSuccess(false);
-    setClickedButton(null);
-    setIsCorrect(null);
+    setWrongButtons(new Set());
+    setCorrectButton(null);
     setShowHelp(false);
     generateNewInterval();
   };

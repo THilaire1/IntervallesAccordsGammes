@@ -118,16 +118,16 @@ const ExerciceAccords4Notes = ({ onReturn }) => {
   };
 
   const checkType = async (selectedType) => {
+    if (showSuccess) return; // Désactiver les clics après succès
+    
     setAttemptCount(prev => prev + 1);
-    setClickedButton(selectedType.label);
     
     if (selectedType.label === chordType.label) {
       setSuccessCount(prev => prev + 1);
       setShowSuccess(true);
-      setIsCorrect(true);
+      setCorrectButton(selectedType.label);
     } else {
-      setShowSuccess(false);
-      setIsCorrect(false);
+      setWrongButtons(prev => new Set([...prev, selectedType.label]));
       await Tone.start();
       errorSynthRef.current.triggerAttackRelease('C2', '0.1');
       // Rejouer l'accord en cas d'erreur
@@ -137,8 +137,8 @@ const ExerciceAccords4Notes = ({ onReturn }) => {
 
   const handleNext = () => {
     setShowSuccess(false);
-    setClickedButton(null);
-    setIsCorrect(null);
+    setWrongButtons(new Set());
+    setCorrectButton(null);
     generateNewChord();
   };
 

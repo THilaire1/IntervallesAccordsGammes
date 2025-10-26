@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import * as Tone from 'tone';
-import { Volume2, RotateCcw } from 'lucide-react';
+import { Volume2 } from 'lucide-react';
 import PianoVirtuel from './PianoVirtuel';
 
 const MODES_GRECS = [

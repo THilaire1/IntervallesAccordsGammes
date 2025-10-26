@@ -259,6 +259,15 @@ const ExerciceAccords3Notes = ({ onReturn }) => {
                   {note}
                 </div>
               ))}
+              <button
+                onClick={playUserNotes}
+                className="btn-secondary flex items-center justify-center"
+                style={{ minWidth: '60px', height: '72px', padding: '0 16px' }}
+                data-testid="btn-play-user-notes"
+                title="Écouter les notes sélectionnées"
+              >
+                <Volume2 size={24} />
+              </button>
             </div>
 
             <div className="flex justify-center gap-4 mb-6">

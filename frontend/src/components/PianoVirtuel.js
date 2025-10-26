@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import * as Tone from 'tone';
+import { Piano, X } from 'lucide-react';
 
 const PianoVirtuel = ({ synth }) => {
   const [activeKeys, setActiveKeys] = useState(new Set());
   const [localSynth, setLocalSynth] = useState(null);
+  const [isVisible, setIsVisible] = useState(true);
+  const [position, setPosition] = useState({ x: 20, y: window.innerHeight - 250 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     if (!synth) {
@@ -18,6 +23,40 @@ const PianoVirtuel = ({ synth }) => {
       };
     }
   }, [synth]);
+
+  const handleMouseDown = (e) => {
+    if (e.target.closest('.piano-drag-handle')) {
+      setIsDragging(true);
+      setDragOffset({
+        x: e.clientX - position.x,
+        y: e.clientY - position.y
+      });
+    }
+  };
+
+  const handleMouseMove = (e) => {
+    if (isDragging) {
+      setPosition({
+        x: e.clientX - dragOffset.x,
+        y: e.clientY - dragOffset.y
+      });
+    }
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  useEffect(() => {
+    if (isDragging) {
+      window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('mouseup', handleMouseUp);
+      return () => {
+        window.removeEventListener('mousemove', handleMouseMove);
+        window.removeEventListener('mouseup', handleMouseUp);
+      };
+    }
+  }, [isDragging, dragOffset]);
 
   const playNote = async (note) => {
     await Tone.start();
@@ -43,9 +82,48 @@ const PianoVirtuel = ({ synth }) => {
     { white: ['C5'], black: [] }
   ];
 
+  if (!isVisible) {
+    return (
+      <button
+        onClick={() => setIsVisible(true)}
+        className="piano-toggle-btn"
+        data-testid="piano-show-btn"
+        style={{
+          position: 'fixed',
+          bottom: '20px',
+          right: '20px',
+          zIndex: 100
+        }}
+      >
+        <Piano size={32} />
+      </button>
+    );
+  }
+
   return (
-    <div className="piano-container" data-testid="piano-virtuel">
-      <div style={{ display: 'flex', justifyContent: 'center', padding: '20px' }}>
+    <div
+      className="piano-container-draggable"
+      data-testid="piano-virtuel"
+      style={{
+        position: 'fixed',
+        left: `${position.x}px`,
+        top: `${position.y}px`,
+        zIndex: 100,
+        cursor: isDragging ? 'grabbing' : 'default'
+      }}
+      onMouseDown={handleMouseDown}
+    >
+      <div className="piano-header piano-drag-handle">
+        <span>Piano Virtuel</span>
+        <button
+          onClick={() => setIsVisible(false)}
+          className="piano-close-btn"
+          data-testid="piano-hide-btn"
+        >
+          <X size={20} />
+        </button>
+      </div>
+      <div style={{ display: 'flex', justifyContent: 'center', padding: '15px', overflowX: 'auto', maxWidth: '800px' }}>
         {octaves.map((octave, octaveIdx) => (
           <div key={octaveIdx} style={{ position: 'relative', display: 'flex' }}>
             {octave.white.map((note, idx) => (

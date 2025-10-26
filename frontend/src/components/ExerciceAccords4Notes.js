@@ -131,6 +131,7 @@ const ExerciceAccords4Notes = ({ onReturn }) => {
   }, [phase, selectedNoteIndex, userNotes]);
 
   const playChord = async () => {
+    if (!isLoaded || !synthRef.current) return;
     await Tone.start();
     const now = Tone.now();
     synthRef.current.triggerAttackRelease(currentChord, '1', now);

@@ -179,16 +179,10 @@ const ExerciceAccords3Notes = ({ onReturn }) => {
 
   const playSuccessSound = async () => {
     await Tone.start();
-    const bellSynth = new Tone.Synth({
-      oscillator: { type: 'sine' },
-      envelope: { attack: 0.001, decay: 0.2, sustain: 0, release: 0.5 }
-    }).toDestination();
-    
+    // Son de clochette avec piano sampler
     const now = Tone.now();
-    bellSynth.triggerAttackRelease('E5', '0.15', now);
-    bellSynth.triggerAttackRelease('G5', '0.15', now + 0.08);
-    
-    setTimeout(() => bellSynth.dispose(), 1000);
+    synthRef.current.triggerAttackRelease('E5', '0.15', now);
+    synthRef.current.triggerAttackRelease('G5', '0.15', now + 0.08);
   };
 
   const playErrorSound = async () => {

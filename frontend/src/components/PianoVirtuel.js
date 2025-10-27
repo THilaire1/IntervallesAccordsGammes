@@ -5,7 +5,7 @@ import { Piano, X } from 'lucide-react';
 const PianoVirtuel = ({ synth }) => {
   const [activeKeys, setActiveKeys] = useState(new Set());
   const [localSynth, setLocalSynth] = useState(null);
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [position, setPosition] = useState({ x: 20, y: window.innerHeight - 250 });
   const [isDragging, setIsDragging] = useState(false);

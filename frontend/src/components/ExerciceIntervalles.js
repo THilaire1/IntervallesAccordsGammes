@@ -248,6 +248,20 @@ const ExerciceIntervalles = ({ onReturn }) => {
       </div>
 
       <div className="exercise-content">
+        <div style={{
+          position: 'absolute',
+          top: '10px',
+          right: '10px',
+          fontSize: '0.9rem',
+          color: '#6b5b3f',
+          fontWeight: '500',
+          textAlign: 'right',
+          lineHeight: '1.4'
+        }}>
+          <div>{successCount}/{attemptCount}</div>
+          <div>{attemptCount > 0 ? ((successCount / attemptCount) * 100).toFixed(1) : '0,0'} %</div>
+        </div>
+
         <div className="flex justify-center gap-4 mb-8">
           <button
             onClick={playInterval}
